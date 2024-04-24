@@ -42,6 +42,7 @@ export default async function handler(
   }
   process.env.DEBUG = 'pw:browser'
   let url = 'https://ahrefs.com/keyword-difficulty/'
+  url = 'https://baidu.com'
   try {
     const browser = await playwright.launchChromium({
       headless: true,
