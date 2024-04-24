@@ -23,7 +23,7 @@ export default async function handler(
   response: NextApiResponse
 ) {
   // replace /api/
-  let inputKeywords = request.url?.replace("/kd/", "")
+  let inputKeywords = request.url?.replace("/api/kd", "")
 
   if (!inputKeywords) {
     response.status(400).send("Missing inputKeywords parameter")
@@ -32,8 +32,13 @@ export default async function handler(
 
   // Example usage
   // const inputKeywords = "sectional sofa"
-  const formattedKeywords = formatKeywords(inputKeywords)
-  console.log(formattedKeywords) // Output: "sectional%20sofa"
+  let formattedKeywords
+  if (inputKeywords.includes(" ")) {
+    formattedKeywords = formatKeywords(inputKeywords)
+    console.log("Formatted keywords:", formattedKeywords)
+  } else {
+    console.log("No spaces found in inputKeywords.")
+  }
 
   let url = 'https://ahrefs.com/keyword-difficulty/?country=us&input=' + formattedKeywords
   try {
