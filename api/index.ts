@@ -50,8 +50,13 @@ export default async function handler(
 
     const page = await context.newPage()
     console.log("go to url", url)
-
-    await page.goto('https://ahrefs.com/keyword-difficulty/', { timeout: 60000 }) // 60 seconds timeout
+    try {
+      await page.goto('https://ahrefs.com/keyword-difficulty/', { timeout: 60000 }) // 60 seconds timeout
+      // Rest of your code
+    } catch (error) {
+      console.error('Navigation error:', error)
+      // Handle the error appropriately
+    }
     console.log(await page.title())
 
     await page
