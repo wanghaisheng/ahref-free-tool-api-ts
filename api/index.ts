@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
-const playwright = require("playwright-aws-lambda")
+const { chromium: playwright } = require("playwright-core")
+const chromium = require("@sparticuz/chromium")
 
 const getDomain = (url: string) => {
   return new URL(url).hostname
@@ -44,9 +45,12 @@ export default async function handler(
   let url = 'https://ahrefs.com/keyword-difficulty/'
   url = 'https://baidu.com'
   try {
-    const browser = await playwright.launchChromium({
-      headless: true,
+    const browser = await playwright.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath("https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v123.0.1-pack.tar"),
+      headless: chromium.headless,
     })
+
     const context = await browser.newContext()
 
     const page = await context.newPage()
