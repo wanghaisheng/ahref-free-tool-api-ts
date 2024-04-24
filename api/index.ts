@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
 const { chromium: playwright } = require("playwright-core")
-const chromium = require("@sparticuz/chromium")
+const chromium = require("@sparticuz/chromium-min")
 
 const getDomain = (url: string) => {
   return new URL(url).hostname
