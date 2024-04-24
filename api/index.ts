@@ -56,10 +56,12 @@ export default async function handler(
     await page
       .getByPlaceholder('Enter keyword')
       .fill(inputKeywords)
+    console.log("fill keyword", inputKeywords)
 
     // Start waiting for new page before clicking. Note no await.
     const pagePromise = context.waitForEvent('page')
     await page.getByRole('button', { name: 'Check keyword' }).click()
+    console.log("click submit")
 
     const newPage = await pagePromise
     await newPage.waitForLoadState()
