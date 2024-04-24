@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next"
+import { True } from '../../tiktoka/game-shorts-app/cloud-functions/check-tiktok-upload-status/generated/index'
 const { chromium: playwright } = require("playwright-core")
 const chromium = require("@sparticuz/chromium-min")
 
@@ -46,9 +47,8 @@ export default async function handler(
   url = 'https://baidu.com'
   try {
     const browser = await playwright.launch({
-      args: chromium.args,
       executablePath: await chromium.executablePath("https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v123.0.1-pack.tar"),
-      headless: chromium.headless,
+      headless: True
     })
 
     const context = await browser.newContext()
