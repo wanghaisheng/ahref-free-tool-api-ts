@@ -49,9 +49,10 @@ export default async function handler(
     const context = await browser.newContext()
 
     const page = await context.newPage()
+    console.log("go to url", url)
 
     await page.goto(url as string)
-    console.log("go to url", url)
+    console.log(await page.title())
 
     await page
       .getByPlaceholder('Enter keyword')
