@@ -44,14 +44,14 @@ export default async function handler(
   let url = 'https://ahrefs.com/keyword-difficulty/'
   try {
     const browser = await playwright.launchChromium({
-      headless: true,
+      headless: false,
     })
     const context = await browser.newContext()
 
     const page = await context.newPage()
     console.log("go to url", url)
 
-    await page.goto(url as string)
+    await page.goto('https://ahrefs.com/keyword-difficulty/', { timeout: 60000 }) // 60 seconds timeout
     console.log(await page.title())
 
     await page
