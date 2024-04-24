@@ -44,7 +44,7 @@ export default async function handler(
   let url = 'https://ahrefs.com/keyword-difficulty/'
   try {
     const browser = await playwright.launchChromium({
-      headless: false,
+      headless: true,
     })
     const context = await browser.newContext()
 
