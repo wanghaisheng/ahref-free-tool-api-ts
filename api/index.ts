@@ -41,7 +41,7 @@ export default async function handler(
     console.log("No spaces found in inputKeywords.")
   }
 
-  let url = 'https://ahrefs.com/keyword-difficulty/?country=us&input=' + formattedKeywords
+  let url = 'https://ahrefs.com/keyword-difficulty/'
   try {
     const browser = await playwright.launchChromium({
       headless: true,
@@ -53,7 +53,21 @@ export default async function handler(
     console.log("url", url)
     await page.goto(url as string)
 
-    const pdfBytes = await page.content()
+    await page
+      .getByPlaceholder('Enter keyword')
+      .fill(inputKeywords)
+
+    // Start waiting for new page before clicking. Note no await.
+    const pagePromise = context.waitForEvent('page')
+    await page.getByRole('button', { name: 'Check keyword' }).click()
+
+    const newPage = await pagePromise
+    await newPage.waitForLoadState()
+    console.log(await newPage.title())
+
+    console.log(newPage.url())
+
+    const pdfBytes = await newPage.content()
     await browser.close()
 
     let fileName = formattedKeywords + ".html"
