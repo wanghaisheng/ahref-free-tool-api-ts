@@ -58,8 +58,8 @@
   <body>
     <h1>PDF Generator</h1>
     <form id="form">
-      <label for="url-input">Insert URL:</label>
-      <input type="url" id="url-input" name="url" required />
+      <label for="keywords-input">Insert URL:</label>
+      <input type="text" id="keywords-input" name="keywords" required />
       <input type="submit" value="Generate PDF" />
     </form>
   </body>
@@ -70,9 +70,9 @@
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      const url = document.getElementById("url-input").value;
+      const keywords = document.getElementById("keywords-input").value;
 
-      window.location = "/api/" + url;
+      window.location = "/kd/" + keywords;
     });
   </script>
 </html>
