@@ -1,5 +1,5 @@
 {
-  "name": "web-to-pdf",
+  "name": "ahref-api-vercel",
   "version": "1.0.0",
   "release": {
     "branches": [
@@ -11,9 +11,9 @@
       "@semantic-release/github"
     ]
   },
-  "description": "Simple web to pdf converter using Playwright hosted as a serverless function on Vercel",
+  "description": "Simple ahref api  using Playwright hosted as a serverless function on Vercel",
   "main": "index.js",
-  "author": "filippofinke",
+  "author": "wanghaisheng",
   "license": "MIT",
   "dependencies": {
     "@semantic-release/commit-analyzer": "^10.0.1",

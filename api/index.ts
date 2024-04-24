@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import { getTextContent } from '../../../product-research/nav-main/src/utils/index'
 const playwright = require("playwright-aws-lambda")
 
 const getDomain = (url: string) => {
