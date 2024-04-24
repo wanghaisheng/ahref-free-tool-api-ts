@@ -37,6 +37,7 @@ export default async function handler(
     formattedKeywords = formatKeywords(inputKeywords)
     console.log("Formatted keywords:", formattedKeywords)
   } else {
+    formattedKeywords = inputKeywords
     console.log("No spaces found in inputKeywords.")
   }
 
