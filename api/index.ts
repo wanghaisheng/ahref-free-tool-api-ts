@@ -40,7 +40,7 @@ export default async function handler(
     formattedKeywords = inputKeywords
     console.log("No spaces found in inputKeywords.")
   }
-
+  process.env.DEBUG = 'pw:browser'
   let url = 'https://ahrefs.com/keyword-difficulty/'
   try {
     const browser = await playwright.launchChromium({
