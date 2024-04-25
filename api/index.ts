@@ -91,21 +91,22 @@ export default async function handler(
 
       const pdfBytes = await newPage.content()
       await browser.close()
+
+      let fileName = formattedKeywords + ".html"
+
+      response.setHeader("Content-Type", "application/html")
+      response.setHeader(
+        "Content-Disposition",
+        'inline; filename="' + fileName + '"'
+      )
+
+      response.status(200).send(pdfBytes)
+
     } catch (error) {
       console.error('Navigation error:', error)
       // Handle the error appropriately
     }
-    let fileName = formattedKeywords + ".html"
-
-    response.setHeader("Content-Type", "application/html")
-    response.setHeader(
-      "Content-Disposition",
-      'inline; filename="' + fileName + '"'
-    )
-
-    response.status(200).send(pdfBytes)
   } catch (error: any) {
     response.status(500).json({ error: error.message })
   }
-
 }
