@@ -59,7 +59,7 @@ export default async function handler(
     const context = await browser.newContext()
     console.log("new context")
 
-    const page = await context.newPage()
+    const page = await browser.newPage()
     console.log("new page")
 
     try {
