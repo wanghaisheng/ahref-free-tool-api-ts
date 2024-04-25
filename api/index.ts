@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import playwright from "playwright-core"
+const { chromium: playwright } = require('playwright-core')
 const sparticuzChromium = require("@sparticuz/chromium-min")
 
 // Optional: If you'd like to use the legacy headless mode. "new" is the default.
@@ -48,13 +48,13 @@ export default async function handler(
   }
   let url = 'https://ahrefs.com/keyword-difficulty/'
   try {
-    const browser = await playwright.chromium.launch({
+    const browser = await playwright.launch({
       args: sparticuzChromium.args,
 
       executablePath: await sparticuzChromium.executablePath("https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v123.0.1-pack.tar"),
       headless: sparticuzChromium.headless,
     })
-    console.log("new browser", browser)
+    console.log("new browser")
 
     // const context = await browser.newContext()
     // console.log("new context")
