@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import { playwright } from 'playwright-core'
+import playwright from "playwright-core"
 const sparticuzChromium = require("@sparticuz/chromium-min")
 
 // Optional: If you'd like to use the legacy headless mode. "new" is the default.
