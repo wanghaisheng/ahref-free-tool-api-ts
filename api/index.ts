@@ -43,9 +43,10 @@ export default async function handler(
   }
   process.env.DEBUG = 'pw:browser'
   let url = 'https://ahrefs.com/keyword-difficulty/'
-  url = 'https://baidu.com'
   try {
     const browser = await playwright.launch({
+      args: chromium.args,
+
       executablePath: await chromium.executablePath("https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v123.0.1-pack.tar"),
       headless: chromium.True
     })
