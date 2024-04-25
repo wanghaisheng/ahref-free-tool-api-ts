@@ -88,6 +88,7 @@ export default async function handler(
             const pagePromise = context.waitForEvent('page')
             await page.getByRole('button', { name: 'Check keyword' }).click()
             console.log("click submit")
+            await page.waitForLoadState() // The promise resolves after 'load' event.
 
             // const newPage = await pagePromise
             // await newPage.waitForLoadState()
