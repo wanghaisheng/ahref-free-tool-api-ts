@@ -57,11 +57,13 @@ export default async function handler(
     console.log("new browser")
 
     const context = await browser.newContext()
+    console.log("new context")
 
     const page = await context.newPage()
+    console.log("new page")
 
-    console.log("go to url", url)
     try {
+      console.log("go to url", url)
 
       await page.goto(url as string, { timeout: 60000 }) // 60 seconds timeout
 
