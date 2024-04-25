@@ -47,7 +47,7 @@ export default async function handler(
   try {
     const browser = await playwright.launch({
       executablePath: await chromium.executablePath("https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v123.0.1-pack.tar"),
-      headless: True
+      headless: chromium.True
     })
 
     const context = await browser.newContext()
