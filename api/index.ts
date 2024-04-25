@@ -89,13 +89,13 @@ export default async function handler(
             await page.getByRole('button', { name: 'Check keyword' }).click()
             console.log("click submit")
 
-            const newPage = await pagePromise
-            await newPage.waitForLoadState()
-            console.log(await newPage.title())
+            // const newPage = await pagePromise
+            // await newPage.waitForLoadState()
+            // console.log(await newPage.title())
 
-            console.log(newPage.url())
+            // console.log(newPage.url())
 
-            const pdfBytes = await newPage.content()
+            const pdfBytes = await page.content()
             await browser.close()
 
             let fileName = formattedKeywords + ".html"
