@@ -78,10 +78,6 @@ export default async function handler(
             // await page.goto(url as string, { timeout: 60000 }) // 60 seconds timeout
 
             console.log(await page.title())
-            // Rest of your code
-
-            await page.getByPlaceholder('Enter keyword').click()
-            console.log("click inputbox")
 
             await page
               .getByPlaceholder('Enter keyword')
