@@ -64,7 +64,7 @@ export default async function handler(
 
     try {
       console.log("go to url", url)
-      await page.goto(url as string, { waitUntil: "networkidle0" })
+      await page.goto(url as string)
 
       // await page.goto(url as string, { timeout: 60000 }) // 60 seconds timeout
 
