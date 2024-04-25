@@ -51,7 +51,7 @@ export default async function handler(
     const browser = await playwright.launch({
       args: sparticuzChromium.args,
 
-      executablePath: await sparticuzChromium.executablePath("https://github.com/Sparticuz/chromium/releases/download/v123.0.0/chromium-v123.0.1-pack.tar"),
+      executablePath: await sparticuzChromium.executablePath("https://github.com/Sparticuz/chromium/releases/download/v123.0.0/chromium-v123.0.0-pack.tar"),
       headless: sparticuzChromium.headless,
     })
     console.log("Chromium:", await browser.version())
