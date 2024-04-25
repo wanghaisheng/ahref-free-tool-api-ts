@@ -1,11 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
-const { chromium: playwright } = require('playwright-core')
-const sparticuzChromium = require("@sparticuz/chromium-min")
-
-// Optional: If you'd like to use the legacy headless mode. "new" is the default.
-sparticuzChromium.setHeadlessMode = true
-// Optional: If you'd like to disable webgl, true is the default.
-sparticuzChromium.setGraphicsMode = false
+const PCR = require("puppeteer-chromium-resolver")
+const chromium = require("@sparticuz/chromium-min")
 
 const getDomain = (url: string) => {
   return new URL(url).hostname
@@ -47,16 +42,58 @@ export default async function handler(
     console.log("No spaces found in inputKeywords.")
   }
   let url = 'https://ahrefs.com/keyword-difficulty/'
+
+  let browser = null
+
+  const options = process.env.AWS_REGION
+    ? {
+      args: chromium.args,
+      executablePath: await chromium.executablePath(
+        "https://github.com/Sparticuz/chromium/releases/download/v110.0.1/chromium-v110.0.1-pack.tar"
+      ),
+      headless: true,
+      ignoreHTTPSErrors: true,
+    }
+    : {
+      defaultViewport: null,
+      args: ["--start-maximized"],
+      executablePath: "https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v123.0.1-pack.tar",
+      headless: false,
+    }
+
+  const stats = await PCR(options)
+
+  // if (browserWSEndpoint) {
+  //   browser = await stats.puppeteer.connect(browserWSEndpoint);
+  // }
+
+  // if (!browser || !browser.connected) {
+  //   browser = await stats.puppeteer.launch({
+  //     headless: false,
+  //     args: ["--no-sandbox"],
+  //     executablePath: stats.executablePath,
+  //   });
+  //   browserWSEndpoint = browser.wsEndpoint();
+  // }
+
+  browser = await stats.puppeteer.launch({
+    headless: false,
+    args: ["--no-sandbox"],
+    executablePath: stats.executablePath,
+  })
+
+  const page = await browser.newPage()
   try {
     const browser = await playwright.launch({
       args: sparticuzChromium.args,
 
-      executablePath: await sparticuzChromium.executablePath("https://github.com/Sparticuz/chromium/releases/download/v123.0.0/chromium-v123.0.1-pack.tar"),
+      executablePath: await sparticuzChromium.executablePath("https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v123.0.1-pack.tar"),
       headless: sparticuzChromium.headless,
     })
     console.log("Chromium:", await browser.version())
 
     const context = await browser.newContext()
+
     console.log("new context")
 
     const page = await context.newPage()
