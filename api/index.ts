@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import { True } from '../../tiktoka/game-shorts-app/cloud-functions/check-tiktok-upload-status/generated/index'
 const { chromium: playwright } = require("playwright-core")
 const chromium = require("@sparticuz/chromium-min")
 
