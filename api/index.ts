@@ -56,10 +56,10 @@ export default async function handler(
     })
     console.log("Chromium:", await browser.version())
 
-    // const context = await browser.newContext()
-    // console.log("new context")
+    const context = await browser.newContext()
+    console.log("new context")
 
-    const page = await browser.newPage()
+    const page = await context.newPage()
     console.log("new page")
 
     try {
@@ -70,31 +70,31 @@ export default async function handler(
 
       console.log(await page.title())
       // Rest of your code
+
+      await page.getByPlaceholder('Enter keyword').click()
+
+      await page
+        .getByPlaceholder('Enter keyword')
+        .fill(inputKeywords)
+      console.log("fill keyword", inputKeywords)
+
+      // Start waiting for new page before clicking. Note no await.
+      const pagePromise = context.waitForEvent('page')
+      await page.getByRole('button', { name: 'Check keyword' }).click()
+      console.log("click submit")
+
+      const newPage = await pagePromise
+      await newPage.waitForLoadState()
+      console.log(await newPage.title())
+
+      console.log(newPage.url())
+
+      const pdfBytes = await newPage.content()
+      await browser.close()
     } catch (error) {
       console.error('Navigation error:', error)
       // Handle the error appropriately
     }
-    await page.getByPlaceholder('Enter keyword').click()
-
-    await page
-      .getByPlaceholder('Enter keyword')
-      .fill(inputKeywords)
-    console.log("fill keyword", inputKeywords)
-
-    // Start waiting for new page before clicking. Note no await.
-    const pagePromise = context.waitForEvent('page')
-    await page.getByRole('button', { name: 'Check keyword' }).click()
-    console.log("click submit")
-
-    const newPage = await pagePromise
-    await newPage.waitForLoadState()
-    console.log(await newPage.title())
-
-    console.log(newPage.url())
-
-    const pdfBytes = await newPage.content()
-    await browser.close()
-
     let fileName = formattedKeywords + ".html"
 
     response.setHeader("Content-Type", "application/html")
