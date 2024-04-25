@@ -66,45 +66,43 @@ export default async function handler(
       await page.goto(url as string, { timeout: 60000 }) // 60 seconds timeout
 
       console.log(await page.title())
-
-      await page.getByPlaceholder('Enter keyword').click()
-
-      await page
-        .getByPlaceholder('Enter keyword')
-        .fill(inputKeywords)
-      console.log("fill keyword", inputKeywords)
-
-      // Start waiting for new page before clicking. Note no await.
-      const pagePromise = context.waitForEvent('page')
-      await page.getByRole('button', { name: 'Check keyword' }).click()
-      console.log("click submit")
-
-      const newPage = await pagePromise
-      await newPage.waitForLoadState()
-      console.log(await newPage.title())
-
-      console.log(newPage.url())
-
-      const pdfBytes = await newPage.content()
-      await browser.close()
-
-      let fileName = formattedKeywords + ".html"
-
-      response.setHeader("Content-Type", "application/html")
-      response.setHeader(
-        "Content-Disposition",
-        'inline; filename="' + fileName + '"'
-      )
-
-      response.status(200).send(pdfBytes)
-    } catch (error: any) {
-      response.status(500).json({ error: error.message })
+      // Rest of your code
+    } catch (error) {
+      console.error('Navigation error:', error)
+      // Handle the error appropriately
     }
+    await page.getByPlaceholder('Enter keyword').click()
 
-    // Rest of your code
-  } catch (error) {
-    console.error('Navigation error:', error)
-    // Handle the error appropriately
+    await page
+      .getByPlaceholder('Enter keyword')
+      .fill(inputKeywords)
+    console.log("fill keyword", inputKeywords)
+
+    // Start waiting for new page before clicking. Note no await.
+    const pagePromise = context.waitForEvent('page')
+    await page.getByRole('button', { name: 'Check keyword' }).click()
+    console.log("click submit")
+
+    const newPage = await pagePromise
+    await newPage.waitForLoadState()
+    console.log(await newPage.title())
+
+    console.log(newPage.url())
+
+    const pdfBytes = await newPage.content()
+    await browser.close()
+
+    let fileName = formattedKeywords + ".html"
+
+    response.setHeader("Content-Type", "application/html")
+    response.setHeader(
+      "Content-Disposition",
+      'inline; filename="' + fileName + '"'
+    )
+
+    response.status(200).send(pdfBytes)
+  } catch (error: any) {
+    response.status(500).json({ error: error.message })
   }
 
 }
