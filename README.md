@@ -59,3 +59,7 @@ Give a ⭐️ if this project helped you!
 sparticuz/chromium-min
 
 dont know why new page continue to fail
+
+> Chromium 123.0.6312.4
+
+according to chrome version to choose playwright-core and sparticuz/chromium-min version
