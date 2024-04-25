@@ -56,11 +56,11 @@ export default async function handler(
     })
     console.log("new browser", browser)
 
-    const context = await browser.newContext()
-    console.log("new context", context)
+    // const context = await browser.newContext()
+    // console.log("new context")
 
     const page = await browser.newPage()
-    console.log("new page", page)
+    console.log("new page")
 
     try {
       console.log("go to url", url)
