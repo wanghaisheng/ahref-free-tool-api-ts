@@ -74,6 +74,7 @@ export default async function handler(
         // Rest of your code
 
         await page.getByPlaceholder('Enter keyword').click()
+        console.log("click inputbox")
 
         await page
           .getByPlaceholder('Enter keyword')
