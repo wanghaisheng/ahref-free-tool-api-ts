@@ -46,7 +46,6 @@ export default async function handler(
     formattedKeywords = inputKeywords
     console.log("No spaces found in inputKeywords.")
   }
-  process.env.DEBUG = 'pw:browser'
   let url = 'https://ahrefs.com/keyword-difficulty/'
   try {
     const browser = await chromium.launch({
@@ -55,12 +54,15 @@ export default async function handler(
       executablePath: await sparticuzChromium.executablePath("https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v123.0.1-pack.tar"),
       headless: sparticuzChromium.headless,
     })
+    console.log("new browser")
 
     const context = await browser.newContext()
 
     const page = await context.newPage()
+
     console.log("go to url", url)
     try {
+
       await page.goto(url as string, { timeout: 60000 }) // 60 seconds timeout
 
       console.log(await page.title())
