@@ -5,7 +5,7 @@ const sparticuzChromium = require("@sparticuz/chromium-min")
 // Optional: If you'd like to use the legacy headless mode. "new" is the default.
 sparticuzChromium.setHeadlessMode = true
 // Optional: If you'd like to disable webgl, true is the default.
-sparticuzChromium.setGraphicsMode = false
+// sparticuzChromium.setGraphicsMode = false
 
 const getDomain = (url: string) => {
   return new URL(url).hostname
