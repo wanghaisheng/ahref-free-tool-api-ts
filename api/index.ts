@@ -54,13 +54,13 @@ export default async function handler(
       executablePath: await sparticuzChromium.executablePath("https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v123.0.1-pack.tar"),
       headless: sparticuzChromium.headless,
     })
-    console.log("new browser")
+    console.log("new browser", browser)
 
     const context = await browser.newContext()
-    console.log("new context")
+    console.log("new context", context)
 
     const page = await browser.newPage()
-    console.log("new page")
+    console.log("new page", page)
 
     try {
       console.log("go to url", url)
