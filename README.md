@@ -53,3 +53,9 @@ Give a ⭐️ if this project helped you!
 <a href="https://www.buymeacoffee.com/filippofinke">
   <img src="https://github.com/filippofinke/filippofinke/raw/main/images/buymeacoffe.png" alt="Buy Me A McFlurry">
 </a>
+
+## try
+
+sparticuz/chromium-min
+
+dont know why new page continue to fail

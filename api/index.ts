@@ -54,7 +54,7 @@ export default async function handler(
       executablePath: await sparticuzChromium.executablePath("https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v123.0.1-pack.tar"),
       headless: sparticuzChromium.headless,
     })
-    console.log("new browser")
+    console.log("Chromium:", await browser.version())
 
     // const context = await browser.newContext()
     // console.log("new context")
@@ -64,8 +64,9 @@ export default async function handler(
 
     try {
       console.log("go to url", url)
+      await page.goto(url as string, { waitUntil: "networkidle0" })
 
-      await page.goto(url as string, { timeout: 60000 }) // 60 seconds timeout
+      // await page.goto(url as string, { timeout: 60000 }) // 60 seconds timeout
 
       console.log(await page.title())
       // Rest of your code
