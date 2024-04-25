@@ -28,89 +28,109 @@ export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
-  // replace /api/
-  if (request.url?.includes('/api/kd')) {
 
-    let inputKeywords = request.url?.replace("/api/kd", "")
+  const { url, query, method } = request
+  const id = parseInt(query.id as string, 10)
+  const name = query.name as string
 
-    if (!inputKeywords) {
-      response.status(400).send("Missing inputKeywords parameter")
-      return
-    }
+  switch (method) {
+    case "GET":
 
-    // Example usage
-    // const inputKeywords = "sectional sofa"
-    let formattedKeywords
-    if (inputKeywords.includes(" ")) {
-      formattedKeywords = formatKeywords(inputKeywords)
-      console.log("Formatted keywords:", formattedKeywords)
-    } else {
-      formattedKeywords = inputKeywords
-      console.log("No spaces found in inputKeywords.")
-    }
-    let url = 'https://ahrefs.com/keyword-difficulty/'
-    try {
-      const browser = await playwright.launch({
-        args: sparticuzChromium.args,
+      if (request.url.includes('/api/kd')) {
 
-        executablePath: await sparticuzChromium.executablePath("https://github.com/Sparticuz/chromium/releases/download/v123.0.0/chromium-v123.0.0-pack.tar"),
-        headless: sparticuzChromium.headless,
-      })
-      console.log("Chromium:", await browser.version())
+        let inputKeywords = request.url?.replace("/api/kd", "")
 
-      const context = await browser.newContext()
-      console.log("new context")
+        if (!inputKeywords) {
+          response.status(400).send("Missing inputKeywords parameter")
+          return
+        }
 
-      const page = await context.newPage()
-      console.log("new page")
+        // Example usage
+        // const inputKeywords = "sectional sofa"
+        let formattedKeywords
+        if (inputKeywords.includes(" ")) {
+          formattedKeywords = formatKeywords(inputKeywords)
+          console.log("Formatted keywords:", formattedKeywords)
+        } else {
+          formattedKeywords = inputKeywords
+          console.log("No spaces found in inputKeywords.")
+        }
+        let url = 'https://ahrefs.com/keyword-difficulty/'
+        try {
+          const browser = await playwright.launch({
+            args: sparticuzChromium.args,
 
-      try {
-        console.log("go to url", url)
-        await page.goto(url as string)
+            executablePath: await sparticuzChromium.executablePath("https://github.com/Sparticuz/chromium/releases/download/v123.0.0/chromium-v123.0.0-pack.tar"),
+            headless: sparticuzChromium.headless,
+          })
+          console.log("Chromium:", await browser.version())
 
-        // await page.goto(url as string, { timeout: 60000 }) // 60 seconds timeout
+          const context = await browser.newContext()
+          console.log("new context")
 
-        console.log(await page.title())
-        // Rest of your code
+          const page = await context.newPage()
+          console.log("new page")
 
-        await page.getByPlaceholder('Enter keyword').click()
-        console.log("click inputbox")
+          try {
+            console.log("go to url", url)
+            await page.goto(url as string)
 
-        await page
-          .getByPlaceholder('Enter keyword')
-          .fill(inputKeywords)
-        console.log("fill keyword", inputKeywords)
+            // await page.goto(url as string, { timeout: 60000 }) // 60 seconds timeout
 
-        // Start waiting for new page before clicking. Note no await.
-        const pagePromise = context.waitForEvent('page')
-        await page.getByRole('button', { name: 'Check keyword' }).click()
-        console.log("click submit")
+            console.log(await page.title())
+            // Rest of your code
 
-        const newPage = await pagePromise
-        await newPage.waitForLoadState()
-        console.log(await newPage.title())
+            await page.getByPlaceholder('Enter keyword').click()
+            console.log("click inputbox")
 
-        console.log(newPage.url())
+            await page
+              .getByPlaceholder('Enter keyword')
+              .fill(inputKeywords)
+            console.log("fill keyword", inputKeywords)
 
-        const pdfBytes = await newPage.content()
-        await browser.close()
+            // Start waiting for new page before clicking. Note no await.
+            const pagePromise = context.waitForEvent('page')
+            await page.getByRole('button', { name: 'Check keyword' }).click()
+            console.log("click submit")
 
-        let fileName = formattedKeywords + ".html"
+            const newPage = await pagePromise
+            await newPage.waitForLoadState()
+            console.log(await newPage.title())
 
-        response.setHeader("Content-Type", "application/html")
-        response.setHeader(
-          "Content-Disposition",
-          'inline; filename="' + fileName + '"'
-        )
+            console.log(newPage.url())
 
-        response.status(200).send(pdfBytes)
+            const pdfBytes = await newPage.content()
+            await browser.close()
 
-      } catch (error) {
-        console.error('Navigation error:', error)
-        // Handle the error appropriately
+            let fileName = formattedKeywords + ".html"
+
+            response.setHeader("Content-Type", "application/html")
+            response.setHeader(
+              "Content-Disposition",
+              'inline; filename="' + fileName + '"'
+            )
+
+            response.status(200).send(pdfBytes)
+
+          } catch (error) {
+            console.error('Navigation error:', error)
+            // Handle the error appropriately
+          }
+        } catch (error: any) {
+          response.status(500).json({ error: error.message })
+        }
+      } else {
+
       }
-    } catch (error: any) {
-      response.status(500).json({ error: error.message })
-    }
+
+      break
+    case "PUT":
+      // Update or create data in your database
+      response.status(200).json({ id, name: name || `User ${id}` })
+      break
+    default:
+      response.setHeader("Allow", ["GET", "PUT"])
+      response.status(405).end(`Method ${method} Not Allowed`)
   }
+
 }
