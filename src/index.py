@@ -42,10 +42,10 @@ async def getAhrefKD(keyword: str):
     #     print(kd)
     #     print(kds)
 
-    return {"domain": domain, "kd": kd, "des": kds}
+    return {"keyword": keyword, "kd": kd, "des": kds}
 
 
-@app.get("/domainda/{domain}")
+@app.get("/domain/da/{domain}")
 async def getDomainDA(domain: str):
     data = check_DA(domain)
     return data
