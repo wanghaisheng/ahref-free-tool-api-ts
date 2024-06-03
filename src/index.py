@@ -23,15 +23,15 @@ async def hello_message(dto: ISayHelloDto):
     return {"message": f"Hello {dto.message}"}
 
 
-@app.get("/ahref/{keyword}")
-async def getAhrefKD(domain: str):
+@app.get("/ahref/kd/{keyword}")
+async def getAhrefKD(keyword: str):
 
     co = ChromiumOptions().auto_port()
     page1 = ChromiumPage(co)
 
     url = "https://ahrefs.com/keyword-difficulty/"
     page1.get(url)
-    keyword = "remini.ai"
+    # keyword = "remini.ai"
     page1.ele("@placeholder=Enter keyword").input(keyword)
 
     # 点击登录按钮
