@@ -66,6 +66,8 @@ export default async function handler(
             executablePath: await sparticuzChromium.executablePath("https://github.com/Sparticuz/chromium/releases/download/v123.0.0/chromium-v123.0.0-pack.tar"),
             headless: sparticuzChromium.headless,
           })
+          console.log('=======', await sparticuzChromium.executablePath())
+
           console.log("Chromium:", await browser.version())
 
           const context = await browser.newContext()
@@ -89,12 +91,16 @@ export default async function handler(
             console.log("fill keyword", inputKeywords)
 
             // Start waiting for new page before clicking. Note no await.
-            // const pagePromise = context.waitForEvent('page')
+            const pagePromise = context.waitForEvent('page')
+
             await page.getByRole('button', { name: 'Check keyword' }).click()
             console.log("click submit")
-            let kd = await page.locator(".css-16bvajg-chartValue").textContent()
+            const newPage = await pagePromise
+            console.log(await newPage.title())
 
-            let des = await page.locator(".css-1wi5h2-row css-1crciv5 css-6rbp9c").textContent()
+            let kd = await newPage.locator(".css-16bvajg-chartValue").textContent()
+
+            let des = await newPage.locator(".css-1wi5h2-row css-1crciv5 css-6rbp9c").textContent()
 
             let data = { "keyword": formattedKeywords, "kd": kd, "des": des }
 
