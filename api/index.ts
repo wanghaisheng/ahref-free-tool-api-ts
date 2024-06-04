@@ -80,7 +80,7 @@ export default async function handler(
             // await page.goto(url as string, { timeout: 60000 }) // 60 seconds timeout
 
             console.log(await page.title())
-            await page.waitForLoadState() // The promise resolves after 'load' event.
+            // await page.waitForLoadState() // The promise resolves after 'load' event.
 
             await page
               .getByPlaceholder('Enter keyword')
@@ -88,7 +88,7 @@ export default async function handler(
             console.log("fill keyword", inputKeywords)
 
             // Start waiting for new page before clicking. Note no await.
-            const pagePromise = context.waitForEvent('page')
+            // const pagePromise = context.waitForEvent('page')
             await page.getByRole('button', { name: 'Check keyword' }).click()
             console.log("click submit")
             await page.waitForLoadState() // The promise resolves after 'load' event.

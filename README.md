@@ -56,7 +56,10 @@ Give a ⭐️ if this project helped you!
 
 ## try
 
-sparticuz/chromium-min
+playwright ts
+
+- sparticuz/chromium-min + remote url chrome
+- sparticuz/chromium /tm/chronium
 
 dont know why new page continue to fail
 
