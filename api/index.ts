@@ -92,26 +92,18 @@ export default async function handler(
             // const pagePromise = context.waitForEvent('page')
             await page.getByRole('button', { name: 'Check keyword' }).click()
             console.log("click submit")
-            await page.waitForLoadState() // The promise resolves after 'load' event.
+            let kd = await page.locator(".css-16bvajg-chartValue").textContent()
 
-            // const newPage = await pagePromise
-            // await newPage.waitForLoadState()
-            // console.log(await newPage.title())
+            let des = await page.locator(".css-1wi5h2-row css-1crciv5 css-6rbp9c").textContent()
 
-            // console.log(newPage.url())
+            let data = { "keyword": formattedKeywords, "kd": kd, "des": des }
 
-            const pdfBytes = await page.content()
             await browser.close()
 
-            let fileName = formattedKeywords + ".html"
 
-            response.setHeader("Content-Type", "application/html")
-            response.setHeader(
-              "Content-Disposition",
-              'inline; filename="' + fileName + '"'
-            )
 
-            response.status(200).send(pdfBytes)
+
+            response.status(200).send(data)
 
           } catch (error) {
             console.error('Navigation error:', error)
