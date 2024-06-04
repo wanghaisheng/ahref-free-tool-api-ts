@@ -3,7 +3,7 @@ from DrissionPage import ChromiumOptions, ChromiumPage
 from fastapi import FastAPI
 
 from src.dtos.ISayHelloDto import ISayHelloDto
-from checkDA import check_DA
+from src.checkDA import check_DA
 
 app = FastAPI()
 
@@ -25,8 +25,8 @@ async def hello_message(dto: ISayHelloDto):
 
 @app.get("/ahref/kd/{keyword}")
 async def getAhrefKD(keyword: str):
-
-    co = ChromiumOptions().auto_port()
+    path = "/tmp/chromium"
+    co = ChromiumOptions().set_browser_path(path).auto_port()
     page1 = ChromiumPage(co)
 
     url = "https://ahrefs.com/keyword-difficulty/"
