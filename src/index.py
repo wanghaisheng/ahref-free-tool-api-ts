@@ -4,6 +4,7 @@ from fastapi import FastAPI
 
 from src.dtos.ISayHelloDto import ISayHelloDto
 from src.checkDA import check_DA
+import os
 
 app = FastAPI()
 
@@ -26,6 +27,24 @@ async def hello_message(dto: ISayHelloDto):
 @app.get("/ahref/kd/{keyword}")
 async def getAhrefKD(keyword: str):
     path = "/tmp/chromium"
+
+    # Try each path in sequence until a valid one is found
+
+    # Check if the path exists
+    if os.path.exists(path):
+        print("tmp is found")
+        # List all files and directories in the path
+        files_and_dirs = os.listdir(path)
+
+        # Filter out directories and only list files
+        files = [f for f in files_and_dirs if os.path.isfile(os.path.join(path, f))]
+
+        # Print all files
+        for file in files:
+            print(file)
+    else:
+        print("The path does not exist")
+
     co = ChromiumOptions().set_browser_path(path).auto_port()
     page1 = ChromiumPage(co)
 
