@@ -100,9 +100,6 @@ export default async function handler(
 
             await browser.close()
 
-
-
-
             response.status(200).send(data)
 
           } catch (error) {
