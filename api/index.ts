@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 const { chromium: playwright } = require('playwright-core')
 const sparticuzChromium = require("@sparticuz/chromium-min")
+const chrome = require("@sparticuz/chromium")
 
 // Optional: If you'd like to use the legacy headless mode. "new" is the default.
 sparticuzChromium.setHeadlessMode = true
@@ -63,6 +64,7 @@ export default async function handler(
             executablePath: await sparticuzChromium.executablePath("https://github.com/Sparticuz/chromium/releases/download/v123.0.0/chromium-v123.0.0-pack.tar"),
             headless: sparticuzChromium.headless,
           })
+          console.log('=======', await chrome.executablePath())
           console.log("Chromium:", await browser.version())
 
           const context = await browser.newContext()
