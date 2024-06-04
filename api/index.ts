@@ -91,16 +91,16 @@ export default async function handler(
             console.log("fill keyword", inputKeywords)
 
             // Start waiting for new page before clicking. Note no await.
-            const pagePromise = context.waitForEvent('page')
+            // const pagePromise = context.waitForEvent('page')
 
             await page.getByRole('button', { name: 'Check keyword' }).click()
             console.log("click submit")
-            const newPage = await pagePromise
-            console.log(await newPage.title())
+            // const newPage = await pagePromise
+            // console.log(await newPage.title())
+            console.log(await page.content())
+            let kd = await page.locator(".css-16bvajg-chartValue").textContent()
 
-            let kd = await newPage.locator(".css-16bvajg-chartValue").textContent()
-
-            let des = await newPage.locator(".css-1wi5h2-row css-1crciv5 css-6rbp9c").textContent()
+            let des = await page.locator(".css-1wi5h2-row css-1crciv5 css-6rbp9c").textContent()
 
             let data = { "keyword": formattedKeywords, "kd": kd, "des": des }
 
