@@ -57,6 +57,8 @@ export default async function handler(
           console.log("No spaces found in inputKeywords.")
         }
         let url = 'https://ahrefs.com/keyword-difficulty/'
+        console.log('=======', await chrome.executablePath())
+
         try {
           const browser = await playwright.launch({
             args: sparticuzChromium.args,
@@ -64,7 +66,6 @@ export default async function handler(
             executablePath: await sparticuzChromium.executablePath("https://github.com/Sparticuz/chromium/releases/download/v123.0.0/chromium-v123.0.0-pack.tar"),
             headless: sparticuzChromium.headless,
           })
-          console.log('=======', await chrome.executablePath())
           console.log("Chromium:", await browser.version())
 
           const context = await browser.newContext()
